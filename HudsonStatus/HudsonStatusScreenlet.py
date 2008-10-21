@@ -13,7 +13,9 @@ import screenlets
 from screenlets.options import StringOption , BoolOption , IntOption , FileOption , DirectoryOption , ListOption , AccountOption , TimeOption , FontOption, ColorOption , ImageOption
 from screenlets import DefaultMenuItem
 import pango
+import cairo
 import gobject
+import gtk
 
 
 class HudsonStatusScreenlet (screenlets.Screenlet):
@@ -64,8 +66,7 @@ class HudsonStatusScreenlet (screenlets.Screenlet):
 			self.bool_example, 'Option group bool', 
 			'Example options group using bool'))
 
-		self.add_option(TimeOption('Example','time_example', self.time_example, 
- 			'Option group time', 'Example options group using time'))
+		self.add_option(TimeOption('Example','time_example', self.time_example,'Option group time', 'Example options group using time'))
 
 		self.add_option(IntOption('Example','int_example', 
 			self.int_example, 'Option group integer', 
@@ -100,7 +101,6 @@ class HudsonStatusScreenlet (screenlets.Screenlet):
 
 
 	def update (self):
-		
 		self.redraw_canvas()
 		return True # keep running this event	
 	
@@ -167,10 +167,9 @@ class HudsonStatusScreenlet (screenlets.Screenlet):
 		"""Called when the Screenlet's options have been applied and the 
 		screenlet finished its initialization. If you want to have your
 		Screenlet do things on startup you should use this handler."""
-		
+		print "Screenlet has been initialized."
 		# add default menu items
 		self.add_default_menuitems()
-
 
 	def on_key_down(self, keycode, keyvalue, event):
 		"""Called when a keypress-event occured in Screenlet's window."""
@@ -190,7 +189,6 @@ class HudsonStatusScreenlet (screenlets.Screenlet):
 	def on_mouse_down (self, event):
 		"""Called when a buttonpress-event occured in Screenlet's window. 
 		Returning True causes the event to be not further propagated."""
-	    
 		return False
 	
 	def on_mouse_enter (self, event):
@@ -244,8 +242,18 @@ class HudsonStatusScreenlet (screenlets.Screenlet):
 		pass
 	
 	def on_draw (self, ctx):
-		"""In here we draw"""
-				
+		"""
+		This is where we draw.
+		"""
+		ctx.scale(self.scale, self.scale)
+		ctx.set_operator(cairo.OPERATOR_OVER)
+		if self.theme:
+			self.theme['background.svg'].render_cairo(ctx)
+			self.__widget.render(ctx, self)
+#		else:
+			#self.theme['background.svg'].render_cairo(ctx)
+			#self.__widget.render(ctx, self)
+
 	def on_draw_shape (self, ctx):
 		self.on_draw(ctx)
 	
