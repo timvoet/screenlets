@@ -7,13 +7,13 @@
 # the terms and conditions of this license. 
 # Thank you for using free software!
 
-#  TestScreenlet (c) RYX 2007 <ryx@ryxperience.com>
+#  HudsonStatusScreenlet (c) Tim Voet 2008 <tim.voet@gmail.com>
 #
 # INFO:
-# - a testing-screenlet for experimental usage
+# - A screenlet that lets you monitor a hudson CI job.
 # 
 # TODO:
-# - 
+# - Add icons for statuses.  And see if there is a way to get Hudson warnings.
 
 import screenlets
 from screenlets.options import StringOption, AccountOption
@@ -24,7 +24,7 @@ import gtk
 import gobject
 
 class HudsonStatusScreenlet (screenlets.Screenlet):
-	"""A testing Screenlet"""
+	"""Hudson Status Screenlet"""
 	
 	# default meta-info for Screenlets
 	__name__	= 'HudsonStatusScreenlet'
@@ -36,11 +36,11 @@ class HudsonStatusScreenlet (screenlets.Screenlet):
 	__timeout = None
 
 	# settings
-	update_interval = 1
+	update_interval = 20
 		
 	# editable options
 	hudson_url = ''
-	job_name = 'Test Job'
+	job_name = ''
 	job_number = ''
 	job_status = ''
 	
@@ -67,12 +67,14 @@ class HudsonStatusScreenlet (screenlets.Screenlet):
 			'Enter the job name you want to monitor here ...'))
 
 		# init the timeout function
+		#self.get_hudson_status
 		self.update_interval = self.update_interval
 
 	def on_init (self):
 		print "HudsonStatusScreenlet has been initialized."
 		# add default menuitems
 		self.add_default_menuitems()
+		self.redraw_canvas()
 
 	# attribute-"setter", handles setting of attributes
 	def __setattr__(self, name, value):
@@ -131,7 +133,6 @@ class HudsonStatusScreenlet (screenlets.Screenlet):
 			url = self.hudson_url
 		else:
 			url = 'http://' + self.hudson_url
-		print 'URL:' + url + '/job/' + self.job_name + '/rssAll' 
 		data = urlopen( url + '/job/' + self.job_name.replace(' ', '%20') + '/rssAll' ).read()
 		dcstart = data.find('<entry>')
 		dcstart = data.find('<title>',dcstart)
