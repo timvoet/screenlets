@@ -28,7 +28,7 @@ class HudsonStatusScreenlet (screenlets.Screenlet):
 	
 	# default meta-info for Screenlets
 	__name__	= 'HudsonStatusScreenlet'
-	__version__	= '0.1'
+	__version__	= '0.2'
 	__author__	= 'Tim Voet'
 	__desc__	= 'A screenlet to monitor hudson job statuses.'
 
@@ -47,7 +47,7 @@ class HudsonStatusScreenlet (screenlets.Screenlet):
 	# constructor
 	def __init__ (self, **keyword_args):
 		#call super (width/height MUST match the size of graphics in the theme)
-		screenlets.Screenlet.__init__(self, width=200, height=200, 
+		screenlets.Screenlet.__init__(self, width=200, height=100, 
 			uses_theme=True, **keyword_args)
 		# set theme
 		self.theme_name = "default"
@@ -67,14 +67,13 @@ class HudsonStatusScreenlet (screenlets.Screenlet):
 			'Enter the job name you want to monitor here ...'))
 
 		# init the timeout function
-		#self.get_hudson_status
+		self.get_hudson_status()
 		self.update_interval = self.update_interval
 
 	def on_init (self):
 		print "HudsonStatusScreenlet has been initialized."
 		# add default menuitems
 		self.add_default_menuitems()
-		self.redraw_canvas()
 
 	# attribute-"setter", handles setting of attributes
 	def __setattr__(self, name, value):
@@ -97,8 +96,6 @@ class HudsonStatusScreenlet (screenlets.Screenlet):
 		if self.theme:
 			# set scale rel. to scale-attribute
 			ctx.scale(self.scale, self.scale)
-			# set size
-			ctx.scale(self.scale, self.scale)
 			# draw bg (if theme available)
 			ctx.set_operator(cairo.OPERATOR_OVER)
 			# render svg-file
@@ -107,12 +104,21 @@ class HudsonStatusScreenlet (screenlets.Screenlet):
 			#ctx.set_source_surface(self.theme['example-test.png'], 0, 0)
 			#ctx.paint()
 			ctx.set_source_rgba(1, 1, 1, 0.9)
-			text = '<small><small><small><small>' + self.job_name +'</small></small></small></small>\n'
-			self.theme.draw_text(ctx,text, 15, 20, 'Free Sans', 25,  self.width,pango.ALIGN_LEFT)
-			text2 = '\n<small><small><small><small>' + self.job_number + '   ' + self.job_status +'</small></small></small></small>\n'
-			self.theme.draw_text(ctx,text2, 15, 20, 'Free Sans', 25,  self.width,pango.ALIGN_LEFT)
+			#self.theme['background-glass.svg'].render_cairo(ctx)
+			text = self.job_name
+			self.theme.draw_text(ctx,text, 10, 15, 'Free Sans', 10,  self.width,pango.ALIGN_LEFT)
+			ctx.set_source_rgba(1, 1, 1, 0.9)
+			text2 = '\n\n' + self.job_number + '   ' + self.job_status +''
+			self.theme.draw_text(ctx,text2, 25, 25, 'Free Sans', 11,  self.width,pango.ALIGN_LEFT)
+			if ( self.job_status =='SUCCESS'):
+				ctx.set_source_rgba(0,255,0,0.8)
+			elif (self.job_status =='FAILURE'):
+				ctx.set_source_rgba(2550,0,0,0.8)
+			else:
+				ctx.set_source_rgba(0,0,0,0.8)
+			self.theme.draw_circle( ctx, self.width-35, self.height-50, 20, 20, True)
 			# add the last layer
-			self.theme['background-glass.svg'].render_cairo(ctx)
+			#self.theme['background-glass.svg'].render_cairo(ctx)
 	
 	def on_draw_shape (self, ctx):
 		self.on_draw(ctx)
@@ -136,9 +142,7 @@ class HudsonStatusScreenlet (screenlets.Screenlet):
 		data = urlopen( url + '/job/' + self.job_name.replace(' ', '%20') + '/rssAll' ).read()
 		dcstart = data.find('<entry>')
 		dcstart = data.find('<title>',dcstart)
-		print dcstart
 		dcend = data.find('</title>', dcstart)
-		print dcend
 		content = data[dcstart+7:dcend]
 		print content
 		numStart = content.find('#' );
@@ -147,7 +151,7 @@ class HudsonStatusScreenlet (screenlets.Screenlet):
 		print self.job_number
 		statusStart = content.find('(', numStart)
 		statusEnd = content.find(')', statusStart)
-		self.job_status = content[statusStart:statusEnd+1]
+		self.job_status = content[statusStart+1:statusEnd]
 		print self.job_status
 	
 # If the program is run directly or passed as an argument to the python
