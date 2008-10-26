@@ -101,10 +101,12 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 		self.on_draw(ctx)
 	
 	def update(self):
-		gobject.idle_add(self.callback)
+		gobject.idle_add(self.get_isp_info)
 		self.redraw_canvas()
 		return True
 
+	def get_isp_info(self):
+		pass
 	
 # If the program is run directly or passed as an argument to the python
 # interpreter then create a Screenlet instance and show it
