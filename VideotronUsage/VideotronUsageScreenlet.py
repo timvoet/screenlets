@@ -41,11 +41,14 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 	# editable options
 	url = ''
 	account = ''
+	stats = {
+		'upload' : 10,
+		'download' : 20}
 	
 	# constructor
 	def __init__ (self, **keyword_args):
 		#call super (width/height MUST match the size of graphics in the theme)
-		screenlets.Screenlet.__init__(self, width=200, height=100, 
+		screenlets.Screenlet.__init__(self, width=250, height=100, 
 			uses_theme=True, **keyword_args)
 		# set theme
 		self.theme_name = "thingrey"
@@ -61,6 +64,7 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 			)) 
 
 		# init the timeout function
+		self.get_isp_info()
 		self.update_interval = self.update_interval
 
 	def on_init (self):
@@ -92,7 +96,17 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 			# draw bg (if theme available)
 			ctx.set_operator(cairo.OPERATOR_OVER)
 			# render svg-file
+			uploadValue = self.stats['upload']
+			downloadValue = self.stats['download']
 			self.theme['background.svg'].render_cairo(ctx)
+			ctx.set_source_rgba(1,1,1,0.8)
+			self.theme.draw_text(ctx, 'Up',6,4, 'Free Sans', 10,  self.width,pango.ALIGN_LEFT)
+			size = (uploadValue/10)*200
+			self.theme.draw_text(ctx, str(uploadValue),80,4,'Free Sans', 10, self.width, pango.ALIGN_LEFT)
+			ctx.translate(0,20)
+			self.theme['background.svg'].render_cairo(ctx)
+			self.theme.draw_text(ctx, 'Down',6,4, 'Free Sans', 10,  self.width,pango.ALIGN_LEFT)
+			self.theme.draw_text(ctx, str(downloadValue),80,4, 'Free Sans', 10,  self.width,pango.ALIGN_LEFT)
 			# render png-file
 			ctx.save()
 
@@ -106,6 +120,8 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 		return True
 
 	def get_isp_info(self):
+                self.stats['upload'] = 5
+		self.stats['download'] = 10
 		pass
 	
 # If the program is run directly or passed as an argument to the python
