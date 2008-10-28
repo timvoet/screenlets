@@ -18,9 +18,11 @@
 import screenlets
 from screenlets.options import StringOption, AccountOption
 from urllib import urlopen, urlencode
+from isp.parser import AccountUsage
 import cairo
 import pango
 import gtk
+import logging
 import gobject
 
 class VideotronUsageScreenlet (screenlets.Screenlet):
@@ -36,7 +38,7 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 	__timeout = None
 
 	# settings
-	update_interval = 3600
+	update_interval = 10
 		
 	# editable options
 	url = ''
@@ -120,6 +122,8 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 		return True
 
 	def get_isp_info(self):
+		account = AccountUsage(self.account)
+		account.update()
                 self.stats['upload'] = 5
 		self.stats['download'] = 10
 		pass

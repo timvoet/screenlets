@@ -68,7 +68,7 @@
        x2="225.71429"
        y2="340.09982"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.2510607,0,0,0.666086,-48.604454,145.36755)" />
+       gradientTransform="matrix(1.245543,0,0,0.6661303,-47.911472,145.35419)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -107,13 +107,13 @@
      id="layer1"
      transform="translate(-108.36618,-335.9941)">
     <rect
-       style="fill:url(#linearGradient3161);fill-opacity:1;stroke:#000000;stroke-width:0.61116976;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:url(#linearGradient3161);fill-opacity:1;stroke:#000000;stroke-width:0.60984081;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
        id="rect2383"
-       width="250.21211"
-       height="19.98258"
-       x="108.67177"
-       y="336.29968"
-       ry="6.1850843"
+       width="249.10858"
+       height="19.98391"
+       x="108.6711"
+       y="336.29901"
+       ry="6.1854959"
        inkscape:export-filename="/home/jem/Desktop/text3197.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
