@@ -38,18 +38,16 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 	__timeout = None
 
 	# settings
-	update_interval = 10
+	update_interval = 1
 		
 	# editable options
 	url = ''
 	account = ''
 	account_usage = None 
-	stats = {
-		'upload' : 10,
-		'download' : 20}
 	
 	# constructor
 	def __init__ (self, **keyword_args):
+		print "VideotronUsageScreenlet is initializing."
 		#call super (width/height MUST match the size of graphics in the theme)
 		screenlets.Screenlet.__init__(self, width=250, height=100, 
 			uses_theme=True, **keyword_args)
@@ -68,17 +66,18 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 		self.add_option(IntOption('ISP',
 			'update_interval',
 			self.update_interval,
-			1,
-			23,
-			1,
+			'Update interval ( in hours )',
+			'The amount of time between checks.  Videotron updates the usage page only once a day',
+			min=0, max=23
 			))
 
 
 	def on_init (self):
 		print "VideotronUsageScreenlet has been initialized."
 		# add default menuitems
-		self.add_default_menuitems()
 		self.account_usage = AccountUsage(self.account)
+		self.account_usage.update()
+		self.add_default_menuitems()
 
 	# attribute-"setter", handles setting of attributes
 	def __setattr__(self, name, value):
@@ -90,7 +89,7 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 				self.__dict__['update_interval'] = value
 				if self.__timeout:
 					gobject.source_remove(self.__timeout)
-				self.__timeout = gobject.timeout_add(int(value * 1000), self.update)
+				self.__timeout = gobject.timeout_add(int(value * 60 * 60 * 1000), self.update)
 			else:
 				# TODO: raise exception!!!
 				self.__dict__['update_interval'] = 1
@@ -99,7 +98,6 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 			if len(value) > 0:
 				self.__dict__['account'] = value
 				self.account_usage = AccountUsage(value)
-				self.__timeout = gobject.timeout_add(int(self.update_interval * 1000),self.update)
 			else:
 				pass
 
@@ -135,13 +133,10 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 		self.on_draw(ctx)
 	
 	def update(self):
-		gobject.idle_add(self.get_isp_info)
+		self.account_usage.update()
 		self.redraw_canvas()
 		return True
 
-	def get_isp_info(self):
-		self.account_usage.update()
-		pass
 	
 # If the program is run directly or passed as an argument to the python
 # interpreter then create a Screenlet instance and show it

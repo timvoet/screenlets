@@ -10,6 +10,8 @@ class AccountUsage():
 		self.downloadSize = 0
 
 	def update(self):
+		logging.debug("Updating account information")
+		print 'Updating account information'
 		account = self.account
 		page_contents = self.__get_usage_html(account)
 		p = re.compile(r'.*([0-9]+\.[0-9]+).*')
