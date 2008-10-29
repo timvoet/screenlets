@@ -12,7 +12,7 @@ class AccountUsage():
 	def update(self):
 		account = self.account
 		page_contents = self.__get_usage_html(account)
-		p = re.compile('([0-9]+\.[0-9]+)')
+		p = re.compile('.*([0-9]+\.[0-9]+).*')
 		values =  p.findall(page_contents, re.MULTILINE)
 		print values
 		values = p.findall( page_contents, re.MULTILINE)
