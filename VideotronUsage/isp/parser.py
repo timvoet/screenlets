@@ -14,10 +14,13 @@ class AccountUsage():
 		print 'Updating account information'
 		account = self.account
 		page_contents = self.__get_usage_html(account)
+		error_p = re.search('vlxxxxxx',page_contents)
+		if ( error_p ):
+			return
 		p = re.compile(r'.*([0-9]+\.[0-9]+).*')
 		values =  p.findall(page_contents, re.MULTILINE)
-		self.uploadSize = float(values[2])
-		self.downloadSize = float(values[4])
+		self.uploadSize = float(values[4])
+		self.downloadSize = float(values[2])
 
 	def __get_usage_html(self, account):
 		logging.debug("Logging into Videotron usage as " + account )

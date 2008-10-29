@@ -98,6 +98,7 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 			if len(value) > 0:
 				self.__dict__['account'] = value
 				self.account_usage = AccountUsage(value)
+				self.update()
 			else:
 				pass
 
