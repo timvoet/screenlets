@@ -16,7 +16,7 @@
 # - Add icons for statuses.  And see if there is a way to get Hudson warnings.
 
 import screenlets
-from screenlets.options import StringOption, AccountOption
+from screenlets.options import StringOption, IntOption
 from urllib import urlopen, urlencode
 from isp.parser import AccountUsage
 import cairo
@@ -43,6 +43,7 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 	# editable options
 	url = ''
 	account = ''
+	account_usage = None 
 	stats = {
 		'upload' : 10,
 		'download' : 20}
@@ -64,15 +65,20 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 			'Account information', 						# widget-label
 			'This is your account string (usually begins with vlxxxxx)....'	# description
 			)) 
+		self.add_option(IntOption('ISP',
+			'update_interval',
+			self.update_interval,
+			1,
+			23,
+			1,
+			))
 
-		# init the timeout function
-		self.get_isp_info()
-		self.update_interval = self.update_interval
 
 	def on_init (self):
 		print "VideotronUsageScreenlet has been initialized."
 		# add default menuitems
 		self.add_default_menuitems()
+		self.account_usage = AccountUsage(self.account)
 
 	# attribute-"setter", handles setting of attributes
 	def __setattr__(self, name, value):
@@ -89,6 +95,13 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 				# TODO: raise exception!!!
 				self.__dict__['update_interval'] = 1
 				pass
+		elif name =="account":
+			if len(value) > 0:
+				self.__dict__['account'] = value
+				self.account_usage = AccountUsage(value)
+				self.__timeout = gobject.timeout_add(int(self.update_interval * 1000),self.update)
+			else:
+				pass
 
 	def on_draw (self, ctx):
 		# if theme is loaded
@@ -98,8 +111,13 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 			# draw bg (if theme available)
 			ctx.set_operator(cairo.OPERATOR_OVER)
 			# render svg-file
-			uploadValue = self.stats['upload']
-			downloadValue = self.stats['download']
+			if self.account_usage ==  None:
+				uploadValue = 0
+				downloadValue = 0
+			else:
+				uploadValue = self.account_usage.uploadSize
+				downloadValue = self.account_usage.downloadSize
+
 			self.theme['background.svg'].render_cairo(ctx)
 			ctx.set_source_rgba(1,1,1,0.8)
 			self.theme.draw_text(ctx, 'Up',6,4, 'Free Sans', 10,  self.width,pango.ALIGN_LEFT)
@@ -122,10 +140,7 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 		return True
 
 	def get_isp_info(self):
-		account = AccountUsage(self.account)
-		account.update()
-                self.stats['upload'] = 5
-		self.stats['download'] = 10
+		self.account_usage.update()
 		pass
 	
 # If the program is run directly or passed as an argument to the python
