@@ -30,7 +30,7 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 	
 	# default meta-info for Screenlets
 	__name__	= 'VideotronUsageScreenlet'
-	__version__	= '0.1'
+	__version__	= '0.2'
 	__author__	= 'Tim Voet'
 	__desc__	= 'A screenlet to monitor your bandwidth usage for videotron users.'
 
