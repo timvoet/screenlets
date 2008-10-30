@@ -43,6 +43,8 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 	# editable options
 	url = ''
 	account = ''
+	upload_limit = 10
+	download_limit = 20
 	account_usage = None 
 	
 	# constructor
@@ -68,6 +70,20 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 			self.update_interval,
 			'Update interval ( in hours )',
 			'The amount of time between checks.  Videotron updates the usage page only once a day',
+			min=0, max=23
+			))
+		self.add_option(IntOption('ISP',
+			'upload_limit',
+			self.upload_limit,
+			'Upload Limit',
+			'The amount of GB you are allowed to upload.',
+			min=0
+			))
+		self.add_option(IntOption('ISP',
+			'download_limit',
+			self.download_limit,
+			'Download limit',
+			'The amount of GB you are allowed to download.',
 			min=0, max=23
 			))
 
@@ -120,13 +136,18 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 			self.theme['background.svg'].render_cairo(ctx)
 			ctx.set_source_rgba(1,1,1,0.8)
 			self.theme.draw_text(ctx, 'Up',6,4, 'Free Sans', 10,  self.width,pango.ALIGN_LEFT)
-			size = (uploadValue/10)*200
+			size = (uploadValue/self.upload_limit)*200
 			self.theme.draw_text(ctx, str(uploadValue),80,4,'Free Sans', 10, self.width, pango.ALIGN_LEFT)
+			ctx.set_source_rgba(0,255,0,0.4)
+			self.theme.draw_rounded_rectangle(ctx,78,6,3,size,9,True)
+			ctx.set_source_rgba(1,1,1,0.8)
 			ctx.translate(0,20)
 			self.theme['background.svg'].render_cairo(ctx)
 			self.theme.draw_text(ctx, 'Down',6,4, 'Free Sans', 10,  self.width,pango.ALIGN_LEFT)
 			self.theme.draw_text(ctx, str(downloadValue),80,4, 'Free Sans', 10,  self.width,pango.ALIGN_LEFT)
-			# render png-file
+			size = (downloadValue/self.download_limit)*200
+			ctx.set_source_rgba(0,255,0,0.4)
+			self.theme.draw_rounded_rectangle(ctx,78,6,3,size,9,True)
 			ctx.save()
 
 	
