@@ -30,7 +30,7 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 	
 	# default meta-info for Screenlets
 	__name__	= 'VideotronUsageScreenlet'
-	__version__	= '0.2'
+	__version__	= '0.3'
 	__author__	= 'Tim Voet'
 	__desc__	= 'A screenlet to monitor your bandwidth usage for videotron users.'
 
@@ -77,14 +77,18 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 			self.upload_limit,
 			'Upload Limit',
 			'The amount of GB you are allowed to upload.',
-			min=0
+			min=1,
+			max=500,
+			increment=1
 			))
 		self.add_option(IntOption('ISP',
 			'download_limit',
 			self.download_limit,
 			'Download limit',
 			'The amount of GB you are allowed to download.',
-			min=0, max=23
+			min=1,
+			max=500,
+			increment=1
 			))
 
 
