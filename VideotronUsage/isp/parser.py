@@ -17,10 +17,10 @@ class AccountUsage():
 		error_p = re.search('vlxxxxxx',page_contents)
 		if ( error_p ):
 			return
-		p = re.compile(r'.*([0-9]+\.[0-9]+).*')
+		p = re.compile(r'.*>([0-9]+\.[0-9]+).*')
 		values =  p.findall(page_contents, re.MULTILINE)
-		self.uploadSize = float(values[4])
-		self.downloadSize = float(values[2])
+		self.uploadSize = float(values[3])
+		self.downloadSize = float(values[1])
 
 	def __get_usage_html(self, account):
 		logging.debug("Logging into Videotron usage as " + account )

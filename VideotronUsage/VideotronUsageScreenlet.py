@@ -141,7 +141,7 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 			ctx.set_source_rgba(1,1,1,0.8)
 			self.theme.draw_text(ctx, 'Up',6,4, 'Free Sans', 10,  self.width,pango.ALIGN_LEFT)
 			uploadPercent = (uploadValue/self.upload_limit)
-			uploadWidth = uploadPercent*200
+			uploadWidth = uploadPercent*165
 			self.theme.draw_text(ctx, str(uploadValue),80,4,'Free Sans', 10, self.width, pango.ALIGN_LEFT)
 			if ( uploadPercent < 0.7 ):
 				ctx.set_source_rgba(0,255,0,0.4)
@@ -156,7 +156,7 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 			self.theme.draw_text(ctx, 'Down',6,4, 'Free Sans', 10,  self.width,pango.ALIGN_LEFT)
 			self.theme.draw_text(ctx, str(downloadValue),80,4, 'Free Sans', 10,  self.width,pango.ALIGN_LEFT)
 			downloadPercent = (downloadValue/self.download_limit)
-			downloadWidth = downloadPercent*200
+			downloadWidth = downloadPercent*165
 			if ( uploadPercent < 0.7 ):
 				ctx.set_source_rgba(0,255,0,0.4)
 			elif ( uploadPercent <0.9):
