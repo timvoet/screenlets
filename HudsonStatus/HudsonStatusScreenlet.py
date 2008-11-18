@@ -28,7 +28,7 @@ class HudsonStatusScreenlet (screenlets.Screenlet):
 	
 	# default meta-info for Screenlets
 	__name__	= 'HudsonStatusScreenlet'
-	__version__	= '0.2'
+	__version__	= '0.3'
 	__author__	= 'Tim Voet'
 	__desc__	= 'A screenlet to monitor hudson job statuses.'
 
@@ -40,6 +40,9 @@ class HudsonStatusScreenlet (screenlets.Screenlet):
 		
 	# editable options
 	hudson_url = ''
+	display_prefix = ''
+	job_prefix = ''
+	job_suffix = ''
 	job_name = ''
 	job_number = ''
 	job_status = ''
@@ -62,12 +65,25 @@ class HudsonStatusScreenlet (screenlets.Screenlet):
 			'This is the URL for your hudson Server....'	# description
 			)) 
 		# test of new account-option
+		self.add_option(StringOption('Hudson', 'display_prefix', 
+			self.display_prefix, 'Display Prefix', 
+			'Enter the prefix to display...'))
+		# test of new account-option
 		self.add_option(StringOption('Hudson', 'job_name', 
 			self.job_name, 'Job Name', 
 			'Enter the job name you want to monitor here ...'))
 
-		# init the timeout function
-		self.get_hudson_status()
+		# test of new account-option
+		self.add_option(StringOption('Hudson', 'job_prefix', 
+			self.job_prefix, 'Job Name Prefix', 
+			'Enter the job name prefix ...'))
+		# test of new account-option
+		self.add_option(StringOption('Hudson', 'job_suffix', 
+			self.job_suffix, 'Job Name Suffix', 
+			'Enter the job name suffix ...'))
+
+		#self.get_hudson_status()
+		self.update()
 		self.update_interval = self.update_interval
 
 	def on_init (self):
@@ -106,6 +122,12 @@ class HudsonStatusScreenlet (screenlets.Screenlet):
 			ctx.set_source_rgba(1, 1, 1, 0.9)
 			#self.theme['background-glass.svg'].render_cairo(ctx)
 			text = self.job_name
+			if ( len(self.job_prefix) != 0 ):
+				text = text[len(self.job_prefix):]
+			if ( len(self.job_suffix) != 0 ):
+				pos = text.find(self.job_suffix)
+				text = text[:pos]
+			text = self.display_prefix + text
 			self.theme.draw_text(ctx,text, 10, 15, 'Free Sans', 10,  self.width,pango.ALIGN_LEFT)
 			ctx.set_source_rgba(1, 1, 1, 0.9)
 			text2 = '\n\n' + self.job_number + '   ' + self.job_status +''
