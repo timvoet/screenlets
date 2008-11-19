@@ -30,7 +30,7 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 	
 	# default meta-info for Screenlets
 	__name__	= 'VideotronUsageScreenlet'
-	__version__	= '0.3'
+	__version__	= '0.4'
 	__author__	= 'Tim Voet'
 	__desc__	= 'A screenlet to monitor your bandwidth usage for videotron users.'
 
@@ -51,7 +51,7 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 	def __init__ (self, **keyword_args):
 		print "VideotronUsageScreenlet is initializing."
 		#call super (width/height MUST match the size of graphics in the theme)
-		screenlets.Screenlet.__init__(self, width=250, height=100, 
+		screenlets.Screenlet.__init__(self, width=300, height=150, 
 			uses_theme=True, **keyword_args)
 		# set theme
 		self.theme_name = "thingrey"
@@ -129,15 +129,30 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 			ctx.scale(self.scale, self.scale)
 			# draw bg (if theme available)
 			ctx.set_operator(cairo.OPERATOR_OVER)
-			# render svg-file
 			if self.account_usage ==  None:
+				startDate = 'n/a'
+				endDate = 'n/a'
 				uploadValue = 0
 				downloadValue = 0
 			else:
+				startDate = self.account_usage.startDate
+				endDate = self.account_usage.endDate
 				uploadValue = self.account_usage.uploadSize
 				downloadValue = self.account_usage.downloadSize
 
+			ctx.save()
+			#Render the whole BG
+			self.theme['widget.svg'].render_cairo(ctx)
+			ctx.set_source_rgba(1,1,1,0.8)
+			self.theme.draw_text( ctx, 'Usage from:' , 20,10,'Free Sans', 8, self.width,pango.ALIGN_LEFT)
+			self.theme.draw_text( ctx, startDate , 100,10,'Free Sans', 8, self.width,pango.ALIGN_LEFT)
+			self.theme.draw_text( ctx, 'to:' , 20,25,'Free Sans', 8, self.width,pango.ALIGN_LEFT)
+			self.theme.draw_text( ctx, endDate , 100,25,'Free Sans', 8, self.width,pango.ALIGN_LEFT)
+			# render the upload bg image
+			ctx.save()
+			ctx.translate(10,40)
 			self.theme['background.svg'].render_cairo(ctx)
+			ctx.save()
 			ctx.set_source_rgba(1,1,1,0.8)
 			self.theme.draw_text(ctx, 'Up',6,4, 'Free Sans', 10,  self.width,pango.ALIGN_LEFT)
 			uploadPercent = (uploadValue/self.upload_limit)
@@ -151,6 +166,7 @@ class VideotronUsageScreenlet (screenlets.Screenlet):
 				ctx.set_source_rgba(255,0,0,0.4)
 			self.theme.draw_rounded_rectangle(ctx,78,6,3,uploadWidth,9,True)
 			ctx.set_source_rgba(1,1,1,0.8)
+			# Render the download bg image
 			ctx.translate(0,20)
 			self.theme['background.svg'].render_cairo(ctx)
 			self.theme.draw_text(ctx, 'Down',6,4, 'Free Sans', 10,  self.width,pango.ALIGN_LEFT)

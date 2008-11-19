@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="272.09189"
+   height="97.105072"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docname="widget.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   version="1.0">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient3747">
+      <stop
+         style="stop-color:#00ff00;stop-opacity:0.34482759;"
+         offset="0"
+         id="stop3749" />
+      <stop
+         style="stop-color:#00ff00;stop-opacity:0;"
+         offset="1"
+         id="stop3751" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3173">
+      <stop
+         id="stop3755"
+         offset="0"
+         style="stop-color:#c20000;stop-opacity:0.9741379;" />
+      <stop
+         style="stop-color:#d30000;stop-opacity:0;"
+         offset="1"
+         id="stop3177" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3187">
+      <stop
+         style="stop-color:#6d6d6d;stop-opacity:1;"
+         offset="0"
+         id="stop3189" />
+      <stop
+         style="stop-color:#bfbfbf;stop-opacity:1;"
+         offset="1"
+         id="stop3191" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3179">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop3181" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop3183" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3155">
+      <stop
+         style="stop-color:#0000ff;stop-opacity:1;"
+         offset="0"
+         id="stop3157" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="1"
+         id="stop3159" />
+    </linearGradient>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="72.543966 : 755.50175 : 1"
+       inkscape:vp_y="6.1230318e-14 : 1000 : 0"
+       inkscape:vp_z="527.71123 : 745.78133 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3173"
+       id="linearGradient3180"
+       x1="216.02338"
+       y1="304.24341"
+       x2="216.29959"
+       y2="357.29437"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0866757,0,0,4.7895248,-7.3710434,-1350.5337)" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.6203867"
+     inkscape:cx="24.255031"
+     inkscape:cy="33.953308"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1279"
+     inkscape:window-height="999"
+     inkscape:window-x="1281"
+     inkscape:window-y="24" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-110.02337,-259.48283)">
+    <rect
+       style="opacity:1;fill:url(#linearGradient3180);fill-opacity:1.0;stroke:#ac0300;stroke-width:1.39163721000000007;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2383"
+       width="270.70026"
+       height="95.713432"
+       x="110.71919"
+       y="260.17865"
+       ry="29.625587"
+       inkscape:export-filename="/home/jem/Desktop/text3197.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+  </g>
+</svg>
