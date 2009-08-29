@@ -1,0 +1,15 @@
+#You need to rename The Repository to VideotronUsage for the screenlet-packager to work.  
+#
+
+to build from source
+1) checkout the project
+git clone git://github.com/timvoet/videotronusage.git VideotronUsage
+
+the folder must be in that case ( screenlet-packager is case sensitive )
+
+from the directory you cloned the project into, execute the following command
+screenlet-package VideotronUsage
+
+you will now have a tar.gz file that you can install using the screenlet manager UI
+
+
